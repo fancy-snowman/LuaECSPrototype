@@ -2,14 +2,9 @@
 
 #include "lua.hpp"
 #include "entt\entt.hpp"
+#include "Systems.hpp"
 #include <vector>
 
-
-class System
-{
-public:
-	virtual bool OnUpdate(entt::registry& registry, float delta) = 0;
-};
 
 class Scene
 {

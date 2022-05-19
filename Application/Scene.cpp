@@ -199,17 +199,7 @@ int Scene::lua_SetComponent(lua_State* L)
 	int entity = lua_tointeger(L, 1);
 	std::string type = lua_tostring(L, 2);
 
-	if (type == "health")
-	{
-		float value = lua_tonumber(L, 3);
-		scene->SetComponent<Health>(entity, value);
-	}
-	else if (type == "poison")
-	{
-		float tickDamage = lua_tonumber(L, 3);
-		scene->SetComponent<Poison>(entity, tickDamage);
-	}
-	else if (type == "behaviour")
+	if (type == "behaviour")
 	{
 		if (scene->HasComponents<BehaviourComponent>(entity))
 		{
@@ -222,12 +212,11 @@ int Scene::lua_SetComponent(lua_State* L)
 		lua_State* thread = lua_newthread(L);
 		lua_setfield(L, -2, "thread");
 
-		scene->SetComponent<YieldableBehaviour>(entity, path, ref, thread);
-		//scene->SetComponent<BehaviourComponent>(entity, path, ref);
+		scene->SetComponent<BehaviourComponent>(entity, path, ref, thread);
 
 		return 1;
 	}
-	if (type == "transform")
+	else if (type == "transform")
 	{
 		scene->SetComponent<TransformComponent>(entity);
 	}
@@ -374,7 +363,7 @@ int Scene::lua_BehaviourRemoveComponent(lua_State* L)
 	if (type == "behaviour")
 	{
 		BehaviourComponent& behaviour = scene->GetComponent<BehaviourComponent>(entity);
-		UnrefBehaviour(L, behaviour.LuaTableRef);
+		UnrefBehaviour(L, behaviour.BehaviourTableRef);
 		scene->RemoveComponent<BehaviourComponent>(entity);
 	}
 	else if (type == "transform")

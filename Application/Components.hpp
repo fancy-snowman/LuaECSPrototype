@@ -1,42 +1,30 @@
 #pragma once
+#include "LuaCommon.hpp"
 
-struct Health
-{
-	float Value;
-};
-
-struct Poison
-{
-	float TickDamage;
-};
-
+// ######################################################################### //
+// ############################### BEHAVIOUR ############################### //
+// ######################################################################### //
 
 struct BehaviourComponent
 {
 	char ScriptPath[64];
-	int LuaTableRef;
+	int BehaviourTableRef = 0;
+	int LastYield = LUA_OK;
+	float UpdateCooldown = 0.0f;
+	lua_State* ThreadState = nullptr;
 
-	BehaviourComponent(const char* path, int luaRef = -1);
+	BehaviourComponent(const char* path, int behaviourTableRef = -1, lua_State* threadState = nullptr);
 };
 void lua_pushbehaviour(lua_State* L, const BehaviourComponent& component);
 BehaviourComponent lua_tobehaviour(lua_State* L, int i);
 
-#include <cstring>
-struct YieldableBehaviour
-{
-	char ScriptPath[64];
-	int LuaTableRef;
-	int LastYield;
-	float WaitTimer;
-	lua_State* ThreadState;
 
-	YieldableBehaviour(const char* path, int luaRef = -1, lua_State* threadState = nullptr) :
-		LuaTableRef(luaRef), LastYield(LUA_OK), WaitTimer(0), ThreadState(threadState)
-	{
-		memset(ScriptPath, '\0', 64);
-		strcpy_s(ScriptPath, path);
-	}
-};
+
+
+
+// ######################################################################### //
+// ############################### TRANSFORM ############################### //
+// ######################################################################### //
 
 struct TransformComponent
 {

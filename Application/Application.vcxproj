@@ -169,6 +169,7 @@
     <ClCompile Include="LuaCommon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Systems.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MonsterBehaviour.lua" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Components.hpp" />
     <ClInclude Include="LuaCommon.hpp" />
     <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="Systems.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,7 +3,8 @@
 
 #include <cstring>
 
-BehaviourComponent::BehaviourComponent(const char* path, int luaRef) : LuaTableRef(luaRef)
+BehaviourComponent::BehaviourComponent(const char* path, int behaviourTableRef, lua_State* threadState) :
+	BehaviourTableRef(behaviourTableRef), LastYield(LUA_OK), UpdateCooldown(0.0f), ThreadState(threadState)
 {
 	memset(ScriptPath, '\0', 64);
 	strcpy_s(ScriptPath, path);
@@ -11,7 +12,7 @@ BehaviourComponent::BehaviourComponent(const char* path, int luaRef) : LuaTableR
 
 void lua_pushbehaviour(lua_State* L, const BehaviourComponent& component)
 {
-	lua_rawgeti(L, LUA_REGISTRYINDEX, component.LuaTableRef);
+	lua_rawgeti(L, LUA_REGISTRYINDEX, component.BehaviourTableRef);
 }
 
 BehaviourComponent lua_tobehaviour(lua_State* L, int i)
